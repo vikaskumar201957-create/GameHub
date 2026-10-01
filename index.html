@@ -51,6 +51,7 @@
 
         <p id="result">Choose your move!</p>
         <p id="score">You: 0 | Computer: 0</p>
+        <button onclick="resetGame()">🔄 Reset Game</button>
     </div>
 
     <script>
@@ -90,6 +91,16 @@ if (result === "You Win! 🏆") {
                 "You: " + playerChoice +
                 "<br>Computer: " + computerChoice +
              "<br>" + result;
+        }
+        function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+
+    document.getElementById("score").innerHTML =
+        "You: 0 | Computer: 0";
+
+    document.getElementById("result").innerHTML =
+        "Choose your move!";
         }
     </script>
 
