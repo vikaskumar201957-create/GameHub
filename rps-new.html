@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+
+            /* RED + BLUE HALF/HALF */
+            background: linear-gradient(
+                90deg,
+                #b91c3c 0%,
+                #b91c3c 50%,
+                #183a8a 50%,
+                #183a8a 100%
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game {
+            width: 100%;
+            max-width: 430px;
+            min-height: 720px;
+
+            background: #101d42;
+            border: 8px solid #292e4a;
+            border-radius: 45px;
+
+            padding: 45px 25px 30px;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.45);
+
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top decoration */
+
+        .top-light {
+            width: 80px;
+            height: 7px;
+            background: #3b4160;
+            border-radius: 10px;
+            margin: -20px auto 35px;
+        }
+
+        h1 {
+            font-size: 34px;
+            line-height: 1.05;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #cbd3ea;
+            margin-top: 15px;
+            font-size: 17px;
+        }
+
+        /* Choices */
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            margin-top: 35px;
+        }
+
+        .choice {
+            width: 105px;
+            height: 105px;
+
+            border-radius: 50%;
+            border: 4px solid #22294a;
+
+            font-size: 55px;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.35);
+        }
+
+        .rock {
+            background: #f23c7b;
+        }
+
+        .paper {
+            background: #ffd83d;
+        }
+
+        .scissors {
+            background: #61d5dc;
+        }
+
+        .choice:hover {
+            transform: scale(1.08);
+        }
+
+        .choice:active {
+            transform: scale(0.92);
+        }
+
+        /* Result */
+
+        #result {
+            min-height: 80px;
+            margin-top: 25px;
+
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.6;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .win {
+            color: #62ff9b;
+        }
+
+        .lose {
+            color: #ff6975;
+        }
+
+        .draw {
+            color: #ffe16b;
+        }
+
+        /* Score */
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-top: 20px;
+            padding: 0 15px;
+        }
+
+        .score-box {
+            text-align: center;
+        }
+
+        .score-label {
+            color: #b9c1dc;
+            font-size: 16px;
+        }
+
+        .score {
+            font-size: 42px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .vs {
+            color: #727c9f;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Round */
+
+        .round {
+            margin-top: 12px;
+            color: #8f99ba;
+            font-size: 13px;
+        }
+
+        /* Reset */
+
+        .reset {
+            margin-top: 22px;
+
+            background: #293458;
+            color: white;
+
+            border: 1px solid #465174;
+            border-radius: 14px;
+
+            padding: 11px 25px;
+            font-size: 14px;
+
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .reset:hover {
+            background: #39466e;
+        }
+
+        .reset:active {
+            transform: scale(0.94);
+        }
+
+        /* Animation */
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .pop {
+            animation: pop 0.35s ease;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 450px) {
+
+            body {
+                padding: 0;
+            }
+
+            .game {
+                min-height: 100vh;
+                border-radius: 0;
+                border: none;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game">
+
+        <div class="top-light"></div>
+
+        <h1>
+            ROCK<br>
+            PAPER<br>
+            SCISSORS
+        </h1>
+
+        <div class="subtitle">
+            Pick your weapon
+        </div>
+
+
+        <!-- WEAPONS -->
+
+        <div class="choices">
+
+            <button
+                class="choice rock"
+                onclick="play('rock')">
+                ✊
+            </button>
+
+            <button
+                class="choice paper"
+                onclick="play('paper')">
+                ✋
+            </button>
+
+            <button
+                class="choice scissors"
+                onclick="play('scissors')">
+                ✌️
+            </button>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div id="result">
+            Choose your weapon 🎮
+        </div>
+
+
+        <!-- SCORE -->
+
+        <div class="scoreboard">
+
+            <div class="score-box">
+                <div class="score-label">
+                    Player
+                </div>
+
+                <div class="score" id="playerScore">
+                    0
+                </div>
+            </div>
+
+
+            <div class="vs">
+                VS
+            </div>
+
+
+            <div class="score-box">
+                <div class="score-label">
+                    CPU
+                </div>
+
+                <div class="score" id="computerScore">
+                    0
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="round">
+            Round <span id="round">0</span>
+        </div>
+
+
+        <button
+            class="reset"
+            onclick="resetGame()">
+            🔄 Reset Game
+        </button>
+
+    </div>
+
+
+    <script>
+
+        let playerScore = 0;
+        let computerScore = 0;
+        let round = 0;
+
+
+        /* VOICE */
+
+        function speak(message) {
+
+            if ("speechSynthesis" in window) {
+
+                speechSynthesis.cancel();
+
+                let voice =
+                    new SpeechSynthesisUtterance(message);
+
+                voice.rate = 1;
+                voice.pitch = 1;
+
+                speechSynthesis.speak(voice);
+            }
+        }
+
+
+        /* GAME */
+
+        function play(playerChoice) {
+
+            round++;
+
+            let choices = [
+                "rock",
+                "paper",
+                "scissors"
+            ];
+
+            let computerChoice =
+                choices[
+                    Math.floor(
+                        Math.random() * choices.length
+                    )
+                ];
+
+
+            let result;
+            let resultClass;
+
+
+            /* DRAW */
+
+            if (playerChoice === computerChoice) {
+
+                result = "It's a Draw! 🤝";
+                resultClass = "draw";
+
+                speak("It's a draw!");
+
+            }
+
+
+            /* PLAYER WIN */
+
+            else if (
+
+                (playerChoice === "rock" &&
+                 computerChoice === "scissors") ||
+
+                (playerChoice === "paper" &&
+                 computerChoice === "rock") ||
+
+                (playerChoice === "scissors" &&
+                 computerChoice === "paper")
+
+            ) {
+
+                playerScore++;
+
+                result = "YOU WON! 🏆";
+                resultClass = "win";
+
+                speak("You won! Congratulations!");
+
+            }
+
+
+            /* COMPUTER WIN */
+
+            else {
+
+                computerScore++;
+
+                result = "CPU WON! 🤖";
+                resultClass = "lose";
+
+                speak("Better luck next time!");
+
+            }
+
+
+            /* UPDATE SCORE */
+
+            document.getElementById("playerScore")
+                .innerText = playerScore;
+
+            document.getElementById("computerScore")
+                .innerText = computerScore;
+
+            document.getElementById("round")
+                .innerText = round;
+
+
+            /* UPDATE RESULT */
+
+            let resultBox =
+                document.getElementById("result");
+
+            resultBox.className =
+                resultClass + " pop";
+
+            resultBox.innerHTML =
+
+                "You: " +
+                playerChoice.toUpperCase() +
+
+                "<br>" +
+
+                "CPU: " +
+                computerChoice.toUpperCase() +
+
+                "<br>" +
+
+                result;
+        }
+
+
+        /* RESET */
+
+        function resetGame() {
+
+            playerScore = 0;
+            computerScore = 0;
+            round = 0;
+
+            document.getElementById("playerScore")
+                .innerText = "0";
+
+            document.getElementById("computerScore")
+                .innerText = "0";
+
+            document.getElementById("round")
+                .innerText = "0";
+
+            let resultBox =
+                document.getElementById("result");
+
+            resultBox.className = "";
+
+            resultBox.innerHTML =
+                "Choose your weapon 🎮";
+
+            speak("Game reset");
+
+        }
+
+    </script>
+
+</body>
+              </html>
