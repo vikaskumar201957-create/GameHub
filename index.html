@@ -54,16 +54,30 @@
 
     <script>
         function play(playerChoice) {
-            alert("JavaScript is working!");
+    
 
             let choices = ["rock", "paper", "scissors"];
 
             let computerChoice =
                 choices[Math.floor(Math.random() * 3)];
 
+           let result;
+
+if (playerChoice === computerChoice) {
+    result = "Draw! 🤝";
+} else if (
+    (playerChoice === "rock" && computerChoice === "scissors") ||
+    (playerChoice === "paper" && computerChoice === "rock") ||
+    (playerChoice === "scissors" && computerChoice === "paper")
+) {
+    result = "You Win! 🏆";
+} else {
+    result = "Computer Wins! 🤖";
+}
             document.getElementById("result").innerHTML =
                 "You: " + playerChoice +
                 "<br>Computer: " + computerChoice;
+            + "<br>" + result;
         }
     </script>
 
