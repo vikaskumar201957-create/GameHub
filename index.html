@@ -4,126 +4,355 @@
     <title>My Game Hub</title>
 
     <style>
-        body {
-            background: #111;
-            color: white;
-            text-align: center;
-            font-family: Arial;
+        * {
+            box-sizing: border-box;
         }
 
-        h1 {
-            font-size: 40px;
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #0b0b12;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .title {
+            font-size: 38px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #aaa;
+            margin-top: 0;
+            margin-bottom: 25px;
         }
 
         .game-card {
-            background: #222;
-            max-width: 350px;
-            margin: 30px auto;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: linear-gradient(145deg, #1d1d29, #111119);
+            max-width: 420px;
+            margin: auto;
+            padding: 28px 20px;
+            border-radius: 24px;
+            border: 1px solid #333342;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 5px;
-            border: none;
-            border-radius: 10px;
-            transition: 0.2s;
-            background: #333;
-            color: white;
+        .game-title {
+            font-size: 25px;
+            margin-top: 0;
         }
-        button:hover {
-    background: #555;
-    transform: scale(1.05);
+
+        .status {
+            display: inline-block;
+            background: #182b20;
+            color: #6cff9a;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: #0d0d14;
+            padding: 15px 8px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            flex: 1;
+        }
+
+        .stat-title {
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .choice-btn {
+            background: #292936;
+            color: white;
+            border: 1px solid #444456;
+            border-radius: 15px;
+            padding: 14px 12px;
+            min-width: 100px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .choice-btn:hover {
+            background: #3a3a4a;
+            transform: translateY(-4px);
+        }
+
+        .choice-btn:active {
+            transform: scale(0.94);
+        }
+
+        .emoji {
+            display: block;
+            font-size: 32px;
+            margin-bottom: 5px;
         }
 
         #result {
+            min-height: 115px;
+            background: #0d0d14;
+            border-radius: 16px;
+            padding: 18px 10px;
+            margin-top: 20px;
             font-weight: bold;
-            font-size: 18px;
-    margin-top: 20px;
-    line-height: 1.6;
+            font-size: 17px;
+            line-height: 1.7;
+            border: 1px solid #292936;
         }
-        
+
+        .win {
+            color: #65ff91;
+        }
+
+        .lose {
+            color: #ff6868;
+        }
+
+        .draw {
+            color: #ffd45c;
+        }
+
+        .reset-btn {
+            margin-top: 20px;
+            background: #292936;
+            color: white;
+            border: 1px solid #444456;
+            border-radius: 12px;
+            padding: 11px 25px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #444455;
+            transform: scale(1.05);
+        }
+
+        .reset-btn:active {
+            transform: scale(0.95);
+        }
+
+        .footer {
+            color: #666;
+            font-size: 12px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 400px) {
+            .title {
+                font-size: 31px;
+            }
+
+            .choice-btn {
+                min-width: 85px;
+                padding: 12px 8px;
+            }
+
+            .emoji {
+                font-size: 28px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <h1>🎮 My Game Hub</h1>
-    <p>Welcome to my first website!</p>
+    <div class="container">
 
-    <div class="game-card">
-        <h2>✊ Rock Paper Scissors</h2>
-        <p>Choose your move:</p>
+        <h1 class="title">🎮 My Game Hub</h1>
+        <p class="subtitle">Play. Compete. Have Fun.</p>
 
-        <button onclick="play('rock')">✊ Rock</button>
-        <button onclick="play('paper')">✋ Paper</button>
-        <button onclick="play('scissors')">✌️ Scissors</button>
+        <div class="game-card">
 
-        <p id="result">Choose your move!</p>
-        <p id="round">Round: 0</p>
-        <p id="score">You: 0 | Computer: 0</p>
-        <button onclick="resetGame()">🔄 Reset Game</button>
+            <div class="status">● GAME ONLINE</div>
+
+            <h2 class="game-title">✊ Rock Paper Scissors</h2>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat-title">ROUND</div>
+                    <div class="stat-value" id="round">0</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title">YOU</div>
+                    <div class="stat-value" id="playerScore">0</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title">COMPUTER</div>
+                    <div class="stat-value" id="computerScore">0</div>
+                </div>
+
+            </div>
+
+            <p>Choose your move</p>
+
+            <div class="choices">
+
+                <button class="choice-btn" onclick="play('rock')">
+                    <span class="emoji">✊</span>
+                    Rock
+                </button>
+
+                <button class="choice-btn" onclick="play('paper')">
+                    <span class="emoji">✋</span>
+                    Paper
+                </button>
+
+                <button class="choice-btn" onclick="play('scissors')">
+                    <span class="emoji">✌️</span>
+                    Scissors
+                </button>
+
+            </div>
+
+            <div id="result">
+                Choose your move!<br>
+                <span style="color:#777;font-size:14px;">
+                    Good luck 🎯
+                </span>
+            </div>
+
+            <button class="reset-btn" onclick="resetGame()">
+                🔄 Reset Game
+            </button>
+
+        </div>
+
+        <div class="footer">
+            My Game Hub • More games coming soon 🚀
+        </div>
+
     </div>
 
     <script>
+
         let playerScore = 0;
         let computerScore = 0;
         let round = 0;
+
         function play(playerChoice) {
-            round++;  
+
+            round++;
 
             let choices = ["rock", "paper", "scissors"];
 
             let computerChoice =
                 choices[Math.floor(Math.random() * 3)];
 
-           let result;
+            let result;
+            let resultClass = "";
 
-if (playerChoice === computerChoice) {
-    result = "Draw! 🤝";
-} else if (
-    (playerChoice === "rock" && computerChoice === "scissors") ||
-    (playerChoice === "paper" && computerChoice === "rock") ||
-    (playerChoice === "scissors" && computerChoice === "paper")
-) {
-    result = "You Win! 🏆";
-} else {
-    result = "Computer Wins! 🤖";
-}
+            if (playerChoice === computerChoice) {
 
-if (result === "You Win! 🏆") {
-    playerScore++;
-} else if (result === "Computer Wins! 🤖") {
-    computerScore++;
-    }
-          document.getElementById("score").innerHTML =
-    "You: " + playerScore +
-    " | Computer: " + computerScore;
+                result = "Draw! 🤝";
+                resultClass = "draw";
+
+            } else if (
+
+                (playerChoice === "rock" &&
+                 computerChoice === "scissors") ||
+
+                (playerChoice === "paper" &&
+                 computerChoice === "rock") ||
+
+                (playerChoice === "scissors" &&
+                 computerChoice === "paper")
+
+            ) {
+
+                result = "You Win! 🏆";
+                resultClass = "win";
+                playerScore++;
+
+            } else {
+
+                result = "Computer Wins! 🤖";
+                resultClass = "lose";
+                computerScore++;
+
+            }
+
             document.getElementById("round").innerHTML =
-    "Round: " + round;
+                round;
+
+            document.getElementById("playerScore").innerHTML =
+                playerScore;
+
+            document.getElementById("computerScore").innerHTML =
+                computerScore;
+
             document.getElementById("result").innerHTML =
+
                 "You: " + playerChoice +
-                "<br>Computer: " + computerChoice +
-             "<br>" + result;
-        }
-function resetGame() {
-    playerScore = 0;
-    computerScore = 0;
-    round = 0;
+                "<br>" +
 
-    document.getElementById("score").innerHTML =
-        "You: 0 | Computer: 0"; 
-    
-    document.getElementById("round").innerHTML =
-    "Round: 0";
+                "Computer: " + computerChoice +
+                "<br>" +
 
-    document.getElementById("result").innerHTML =
-        "Choose your move!";
+                "<span class='" + resultClass + "'>" +
+                result +
+                "</span>";
+
         }
+
+        function resetGame() {
+
+            playerScore = 0;
+            computerScore = 0;
+            round = 0;
+
+            document.getElementById("round").innerHTML =
+                "0";
+
+            document.getElementById("playerScore").innerHTML =
+                "0";
+
+            document.getElementById("computerScore").innerHTML =
+                "0";
+
+            document.getElementById("result").innerHTML =
+
+                "Choose your move!<br>" +
+                "<span style='color:#777;font-size:14px;'>" +
+                "Good luck 🎯" +
+                "</span>";
+
+        }
+
     </script>
 
 </body>
