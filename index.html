@@ -50,9 +50,12 @@
         <button onclick="play('scissors')">✌️ Scissors</button>
 
         <p id="result">Choose your move!</p>
+        <p id="score">You: 0 | Computer: 0</p>
     </div>
 
     <script>
+        let playerScore = 0;
+        let computerScore = 0;
         function play(playerChoice) {
     
 
@@ -73,7 +76,15 @@ if (playerChoice === computerChoice) {
     result = "You Win! 🏆";
 } else {
     result = "Computer Wins! 🤖";
+    if (result === "You Win! 🏆") {
+    playerScore++;
+} else if (result === "Computer Wins! 🤖") {
+    computerScore++;
+    }
 }
+          document.getElementById("score").innerHTML =
+    "You: " + playerScore +
+    " | Computer: " + computerScore;
             document.getElementById("result").innerHTML =
                 "You: " + playerChoice +
                 "<br>Computer: " + computerChoice +
