@@ -76,12 +76,13 @@ if (playerChoice === computerChoice) {
     result = "You Win! 🏆";
 } else {
     result = "Computer Wins! 🤖";
-    if (result === "You Win! 🏆") {
+}
+
+if (result === "You Win! 🏆") {
     playerScore++;
 } else if (result === "Computer Wins! 🤖") {
     computerScore++;
     }
-}
           document.getElementById("score").innerHTML =
     "You: " + playerScore +
     " | Computer: " + computerScore;
